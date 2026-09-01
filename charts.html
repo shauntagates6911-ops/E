@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E | Charts 📊</title>
+    <style>
+        /* This sets a clean sans-serif font for the whole page */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333333;
+        }
+
+        header {
+            background: #0066cc;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            background: #ffffff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="latest.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-logo">
+        <a href="#">E</a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="/index.html">Home</a></li>
+        <li><a href="/latest.html" class="active">Latest</a></li>
+        <li><a href="/popular.html">Most Popular</a></li>
+        <li><a href="/liked.html">Most Liked</a></li>
+        <li><a href="/join.html">Sign in</a></li>
+    </ul>
+</nav>
+
+<section class="latest-section">
+    <h1>Latest Projects</h1>
+    <div id="latestGrid" class="project-grid">
+        <!-- JS will inject project cards here -->
+    </div>
+</section>
+
+<script src="latest.js"></script>
+</body>
+</html>

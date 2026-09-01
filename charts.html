@@ -139,46 +139,7 @@ function renderResults(results) {
     </script>
 
 <script src="latest.js"></script>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scratch Search Engine Emulator</title>
-    <style>
-        :root {
-            --scratch-orange: #ffab19;
-            --scratch-blue: #4c97ff;
-            --scratch-dark: #2c3e50;
-            --scratch-gray: #f2f2f2;
-            --text-color: #575e75;
-        }
-
-        body {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--scratch-gray);
-            color: var(--text-color);
-        }
-
-        /* Navbar Styling */
-        .navbar {
-            background-color: var(--scratch-blue);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .logo {
-            color: white;
-            font-weight: bold;
-            font-size: 24px;
-            text-decoration: none;
-        }
-
+<style>
         .search-container {
             display: flex;
             flex-grow: 1;
@@ -321,7 +282,7 @@ function renderResults(results) {
 
     <!-- Navigation Bar -->
     <div class="navbar">
-        <a href="#" class="logo" onclick="resetSearch()">scratch</a>
+        <a href="#" class="logo" onclick="resetSearch()">e</a>
         <div class="search-container">
             <input type="text" id="searchInput" class="search-input" placeholder="Search or type 'most liked:projects'...">
             <button class="search-btn" onclick="executeSearch()">🔍</button>

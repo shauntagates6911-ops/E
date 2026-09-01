@@ -39,9 +39,9 @@
     </div>
     <ul class="nav-links">
         <li><a href="/index.html">Home</a></li>
-        <li><a href="/latest.html" class="active">Latest</a></li>
+        <li><a href="/charts.html" class="active">Latest</a></li>
         <li><a href="/popular.html">Most Popular</a></li>
-        <li><a href="/liked.html">Most Liked</a></li>
+        <li><a href="/charts.html">Most Liked</a></li>
         <li><a href="/join.html">Sign in</a></li>
     </ul>
 </nav>
@@ -52,6 +52,91 @@
         <!-- JS will inject project cards here -->
     </div>
 </section>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f0eb; /* Soft cream background */
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background-color: #5c4033; /* Dark brown background */
+            padding: 6px;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: #ffffff; /* White text for contrast */
+            outline: none;
+        }
+
+        /* Styling the placeholder text */
+        .search-input::placeholder {
+            color: #c2b2a9; /* Light tan placeholder */
+        }
+
+        .search-button {
+            background-color: #8b5a2b; /* Warm medium brown button */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        /* Button hover effect */
+        .search-button:hover {
+            background-color: #a06d3b; /* Slightly lighter brown on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <form class="search-container" action="/search" method="GET">
+        <input type="text" name="q" class="search-input" placeholder="Search here..." required>
+        <button type="submit" class="search-button">Search</button>
+    </form>
+    <script>
+document.querySelector('.search-container').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    
+    const query = document.querySelector('.search-input').value.trim();
+    if (!query) return;
+
+    try {
+        // Appends the sanitized query string to your backend API endpoint
+        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+        
+        if (!response.ok) throw new Error('Network response failed');
+        
+        const data = await response.json();
+        renderResults(data); // Pass data to a rendering function
+    } catch (error) {
+        console.error('Search request failed:', error);
+    }
+});
+
+function renderResults(results) {
+    // Logic to inject result data into the DOM goes here
+}
+    </script>
 
 <script src="latest.js"></script>
 </body>

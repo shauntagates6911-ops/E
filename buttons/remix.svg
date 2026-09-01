@@ -1,0 +1,19 @@
+<button class="spiral-btn">
+  <svg viewBox="0 0 64 64" width="24" height="24" aria-hidden="true">
+    <path
+      d="M32 12
+         C22 12 16 20 16 28
+         C16 36 22 42 30 42
+         C36 42 40 38 40 34
+         C40 30 38 28 36 28
+         C34 28 32 30 32 32
+         C32 34 33 35 34 35"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+  <span>Spiral</span>
+</button>

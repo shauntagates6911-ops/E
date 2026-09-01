@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Publish Project • E</title>
+  <link rel="stylesheet" href="css/publish.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo">
+    <a href="/index.html">E</a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="/index.html">Home</a></li>
+    <li><a href="/latest.html">Latest</a></li>
+    <li><a href="/charts.html">Charts</a></li>
+    <li><a href="/publish.html" class="active">Publish</a></li>
+    <li><a href="/join.html">Sign in</a></li>
+  </ul>
+</nav>
+
+<main class="publish-container">
+  <h1>Publish a Project</h1>
+  <form id="publishForm" class="publish-form">
+    <label>
+      Title
+      <input type="text" name="title" required>
+    </label>
+
+    <label>
+      Description
+      <textarea name="description" rows="3" required></textarea>
+    </label>
+
+    <label>
+      E project link
+      <input type="url" name="projectUrl" required>
+    </label>
+
+    <label>
+      Thumbnail
+      <input type="url" name="thumbnail" placeholder="https://...">
+    </label>
+
+    <label>
+      Tags (comma separated)
+      <input type="text" name="tags" placeholder="platformer, remix, music">
+    </label>
+
+    <button type="submit" class="publish-btn">Publish</button>
+    <p id="publishStatus" class="publish-status"></p>
+  </form>
+</main>
+
+<script src="js/publish.js"></script>
+</body>
+</html>

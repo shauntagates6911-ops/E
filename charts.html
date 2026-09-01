@@ -139,5 +139,300 @@ function renderResults(results) {
     </script>
 
 <script src="latest.js"></script>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch Search Engine Emulator</title>
+    <style>
+        :root {
+            --scratch-orange: #ffab19;
+            --scratch-blue: #4c97ff;
+            --scratch-dark: #2c3e50;
+            --scratch-gray: #f2f2f2;
+            --text-color: #575e75;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--scratch-gray);
+            color: var(--text-color);
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: var(--scratch-blue);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            text-decoration: none;
+        }
+
+        .search-container {
+            display: flex;
+            flex-grow: 1;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 40px 8px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: var(--scratch-orange);
+            border: none;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            padding: 0 15px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .operator-tip {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-left: 4px solid var(--scratch-orange);
+            font-size: 13px;
+        }
+
+        .operator-link {
+            color: var(--scratch-blue);
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Project Grid Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        /* Project Card Styling */
+        .card {
+            background: white;
+            border: 1px solid #dddddd;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .card-info {
+            padding: 12px;
+        }
+
+        .project-title {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .project-author {
+            margin: 0 0 10px 0;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #666;
+            border-top: 1px solid #eee;
+            padding-top: 8px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4px 0;
+            font-size: 16px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="#" class="logo" onclick="resetSearch()">scratch</a>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search or type 'most liked:projects'...">
+            <button class="search-btn" onclick="executeSearch()">🔍</button>
+        </div>
+    </div>
+
+    <!-- Main View Panel -->
+    <div class="container">
+        <div class="header-section">
+            <h2 id="resultTitle">Trending Projects</h2>
+            <div class="operator-tip">
+                Tip: Try typing <span class="operator-link" onclick="fillMagicQuery()">most liked:projects</span> to trigger the special filter.
+            </div>
+        </div>
+
+        <!-- Render Target Grid -->
+        <div class="grid" id="projectGrid"></div>
+    </div>
+
+    <script>
+        // Project Database
+        const projectDatabase = [
+            { id: 1, title: "Paper Minecraft v11.4", author: "Griffpatch", likes: 843200, views: 2400500, color: "#4c97ff" },
+            { id: 2, title: "Geometric Dash World", author: "CrystalCoder", likes: 320100, views: 980000, color: "#ffab19" },
+            { id: 3, title: "3D Scrolling Engine", author: "MathWizard", likes: 512000, views: 1200000, color: "#2ca02c" },
+            { id: 4, title: "Anime Dress Up Deluxe", author: "KawaiiNeko", likes: 94000, views: 450000, color: "#e377c2" },
+            { id: 5, title: "Epic Platformer v2", author: "UnicornGamer", likes: 721000, views: 1900000, color: "#bcbd22" },
+            { id: 6, title: "Flight Simulator Pro", author: "AeroTech", likes: 15000, views: 82000, color: "#17becf" },
+            { id: 7, title: "Clicker Tycoon 2026", author: "GoldMiner", likes: 935000, views: 3100000, color: "#9467bd" },
+            { id: 8, title: "OS Emulator System", author: "TechGuy", likes: 43000, views: 150000, color: "#7f7f7f" }
+        ];
+
+        // Format system values safely (e.g., 843200 -> 843.2K)
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num;
+        }
+
+        // Render project cards to interface
+        function renderProjects(projects) {
+            const grid = document.getElementById('projectGrid');
+            grid.innerHTML = '';
+
+            if (projects.length === 0) {
+                grid.innerHTML = `<div class="no-results">No projects matched your search criteria.</div>`;
+                return;
+            }
+
+            projects.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="thumbnail" style="background-color: ${project.color}">
+                        E
+                    </div>
+                    <div class="card-info">
+                        <div class="project-title" title="${project.title}">${project.title}</div>
+                        <div class="project-author">by ${project.author}</div>
+                        <div class="stats">
+                            <div class="stat-item" title="Likes">❤️ ${formatNumber(project.likes)}</div>
+                            <div class="stat-item" title="Views">👁️ ${formatNumber(project.views)}</div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Core logic to parse and filter input strings
+        function executeSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            const titleElement = document.getElementById('resultTitle');
+            
+            let filteredResults = [...projectDatabase];
+
+            // Specific syntax parsing check
+            if (query === 'most liked:projects') {
+                titleElement.innerText = "Search Results: Most Liked Projects";
+                // Sort descending by like counts
+                filteredResults.sort((a, b) => b.likes - a.likes);
+            } else if (query !== '') {
+                titleElement.innerText = `Search Results for "${query}"`;
+                // Standard text match fallback
+                filteredResults = filteredResults.filter(p => 
+                    p.title.toLowerCase().includes(query.toLowerCase()) || 
+                    p.author.toLowerCase().includes(query.toLowerCase())
+                );
+            } else {
+                titleElement.innerText = "Trending Projects";
+            }
+
+            renderProjects(filteredResults);
+        }
+
+        // Helper interface utilities
+        function fillMagicQuery() {
+            document.getElementById('searchInput').value = 'most liked:projects';
+            executeSearch();
+        }
+
+        function resetSearch() {
+            document.getElementById('searchInput').value = '';
+            executeSearch();
+        }
+
+        // Initial default view generation
+        renderProjects(projectDatabase);
+    </script>
+</body>
+</html>
+
 </body>
 </html>
